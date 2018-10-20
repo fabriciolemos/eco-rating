@@ -5,27 +5,20 @@ import java.util.Map;
 
 public class State extends Region {
     private String name;
-    private Country country;
     private Map<String, City> cityMap = new HashMap<>();
 
-    public State(String name, Country country) {
+    public State(String name) {
         this.name = name;
-        this.country = country;
     }
 
     public String getName() {
         return name;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
     @Override
     public String toString() {
         return "State{" +
                 "name='" + name + '\'' +
-                ", country=" + country +
                 '}';
     }
 

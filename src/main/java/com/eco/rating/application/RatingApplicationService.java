@@ -1,66 +1,51 @@
 package com.eco.rating.application;
 
-import com.eco.rating.adapter.StandardInputListener;
 import com.eco.rating.model.*;
-
-import java.util.List;
 
 public class RatingApplicationService {
 
     private UserRepository userRepository = new UserRepository();
     private CountryRepository countryRepository = new CountryRepository();
 
-    public void solveRating() {
-        StandardInputListener standardInputListener = new StandardInputListener();
-        List<User> users = standardInputListener.getDataInput();
+    public void addUser(String userName, double rValue, String countryName, String stateName, String cityName) {
+        userRepository.add(new User(userName, rValue));
 
-        for (User user : users) {
-            // TODO: need to check for duplicates?
-            userRepository.add(user);
-
-            State userState = user.getCity().getState();
-            String countryName = userState.getCountry().getName();
-            Country country = countryRepository.get(countryName);
-            if (country == null) {
-                country = new Country(countryName);
-                countryRepository.add(country);
-            }
-            country.getRValues().add(user.getRValue());
-
-            State state = country.getState(userState.getName());
-            if (state == null) {
-                state = new State(userState.getName(), country);
-                country.addState(state);
-            }
-
-            state.getRValues().add(user.getRValue());
-
-            City city = state.getCity(user.getCity().getName());
-            if (city == null) {
-                city = new City(user.getCity().getName(), state);
-                state.add(city);
-            }
-
-            city.getRValues().add(user.getRValue());
-
+        Country country = countryRepository.get(countryName);
+        if (country == null) {
+            country = new Country(countryName);
+            countryRepository.add(country);
         }
-        System.out.println(users);
+        country.getRValues().add(rValue);
 
-        List<QueryInput> queryInput = standardInputListener.getQueryInput();
-        System.out.println(queryInput);
-
-        for (QueryInput input : queryInput) {
-            User user = userRepository.get(input.getUserName());
-            Country country = countryRepository.get(input.getCountryName());
-            if (input.getCityName() != null) {
-                input.setRating(country.getState(input.getStateName()).getCity(input.getCityName()).getUserRating(user));
-            } else if (input.getStateName() != null) {
-                input.setRating(country.getState(input.getStateName()).getUserRating(user));
-            } else {
-                input.setRating(country.getUserRating(user));
-            }
+        State state = country.getState(stateName);
+        if (state == null) {
+            state = new State(stateName);
+            country.addState(state);
         }
 
-        System.out.println(queryInput);
+        state.getRValues().add(rValue);
+
+        City city = state.getCity(cityName);
+        if (city == null) {
+            city = new City(cityName);
+            state.add(city);
+        }
+
+        city.getRValues().add(rValue);
+    }
+
+    public int getRating(String userName, String countryName, String stateName, String cityName) {
+        User user = userRepository.get(userName);
+        Country country = countryRepository.get(countryName);
+
+        if (cityName != null) {
+            return country.getState(stateName).getCity(cityName).getUserRating(user);
+        }
+
+        if (stateName != null) {
+            return country.getState(stateName).getUserRating(user);
+        }
+        return country.getUserRating(user);
+
     }
 }

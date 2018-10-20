@@ -1,56 +1,51 @@
 package com.eco.rating.adapter;
 
-import com.eco.rating.model.*;
+import com.eco.rating.application.RatingApplicationService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class StandardInputListener {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final RatingApplicationService ratingApplicationService = new RatingApplicationService();
 
-    public List<User> getDataInput() {
-
-        List<User> inputData = new ArrayList<>();
+    public void processDataInput() {
         String line = scanner.nextLine().trim();
 
         while (!line.equals("")) {
             String[] strings = line.split("\" ");
 
             String[] locationInputArray = strings[1].split("/");
-            Country country = new Country(locationInputArray[0].substring(1));
-            State state = new State(locationInputArray[1], country);
-            City city = new City(locationInputArray[2], state);
+            String countryName = this.trimQuotes(locationInputArray[0]);
+            String stateName = this.trimQuotes(locationInputArray[1]);
+            String cityName = this.trimQuotes(locationInputArray[2]);
+            double rValue = Double.parseDouble(strings[2]);
+            String userName = strings[0].substring(1);
 
-            inputData.add(new User(strings[0].substring(1), city, Double.parseDouble(strings[2])));
+            ratingApplicationService.addUser(userName, rValue, countryName, stateName, cityName);
 
             line = scanner.nextLine().trim();
         }
-        return inputData;
     }
 
-    public List<QueryInput> getQueryInput() {
-
-        List<QueryInput> queryData = new ArrayList<>();
+    public void processQueryInput() {
         String line = scanner.nextLine().trim();
-        System.out.println("line = " + line);
-        System.out.println("line = " + line);
 
         while (!line.equals("")) {
             String[] strings = line.split("\" ");
             String userName = strings[0].substring(1);
-            String[] region = strings[1].split("/");
-            String countryName = trimQuotes(region[0]);
-            String stateName = region.length >= 2 ? trimQuotes(region[1]) : null;
-            String cityName = region.length >= 3 ? trimQuotes(region[2]) : null;
-            QueryInput queryInput = new QueryInput(userName, countryName, stateName, cityName);
+            String regionString = strings[1];
+            String[] regionArray = regionString.split("/");
+            String countryName = trimQuotes(regionArray[0]);
+            String stateName = regionArray.length >= 2 ? trimQuotes(regionArray[1]) : null;
+            String cityName = regionArray.length >= 3 ? trimQuotes(regionArray[2]) : null;
 
-            queryData.add(queryInput);
+            int rating = this.ratingApplicationService.getRating(userName, countryName, stateName, cityName);
+
+            System.out.println(new StringBuilder("\"").append(userName).append("\" ").append(regionString).append(" ").append(rating));
+
             line = scanner.nextLine().trim();
         }
-//        System.out.println("queryData = " + queryData);
-        return queryData;
     }
 
     private String trimQuotes(String s) {

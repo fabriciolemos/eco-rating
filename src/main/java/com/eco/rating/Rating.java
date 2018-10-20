@@ -1,10 +1,13 @@
 package com.eco.rating;
 
-import com.eco.rating.application.RatingApplicationService;
+import com.eco.rating.adapter.StandardInputListener;
 
 public class Rating {
 
     public static void main(String[] args) {
-        new RatingApplicationService().solveRating();
+
+        StandardInputListener standardInputListener = new StandardInputListener();
+        standardInputListener.processDataInput();
+        standardInputListener.processQueryInput();
     }
 }
