@@ -3,22 +3,25 @@ package com.eco.rating.adapter;
 import com.eco.rating.application.RatingApplicationService;
 
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class StandardInputListener {
 
+    private final PrintStream output;
     private Scanner scanner ;
     private RatingApplicationService ratingApplicationService;
 
-    public StandardInputListener(InputStream inputStream, RatingApplicationService ratingApplicationService) {
+    public StandardInputListener(InputStream inputStream, PrintStream out, RatingApplicationService ratingApplicationService) {
         this.scanner = new Scanner(inputStream);
+        this.output = out;
         this.ratingApplicationService = ratingApplicationService;
     }
 
     public void processDataInput() {
         String line = scanner.nextLine().trim();
 
-        while (!line.equals("")) {
+        while (!line.isEmpty()) {
             String[] strings = line.split("\" ");
 
             String[] locationInputArray = strings[1].split("/");
@@ -37,7 +40,7 @@ public class StandardInputListener {
     public void processQueryInput() {
         String line = scanner.nextLine().trim();
 
-        while (!line.equals("")) {
+        while (!line.isEmpty()) {
             String[] strings = line.split("\" ");
             String userName = strings[0].substring(1);
             String regionString = strings[1];
@@ -48,7 +51,7 @@ public class StandardInputListener {
 
             int rating = this.ratingApplicationService.getRating(userName, countryName, stateName, cityName);
 
-            System.out.println(new StringBuilder("\"").append(userName).append("\" ").append(regionString).append(" ").append(rating));
+            output.println(new StringBuilder("\"").append(userName).append("\" ").append(regionString).append(' ').append(rating));
 
             line = scanner.nextLine().trim();
         }
