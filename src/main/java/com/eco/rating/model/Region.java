@@ -24,6 +24,14 @@ public abstract class Region {
                 index = i;
             }
         }
-        return ((index + 1) * 10) / rValues.size();
+        return (index + 1) * 10 / rValues.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+                   "rValues=" + rValues +
+                   ", rValuesSorted=" + rValuesSorted +
+                   '}';
     }
 }

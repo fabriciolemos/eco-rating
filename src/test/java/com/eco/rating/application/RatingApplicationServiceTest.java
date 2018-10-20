@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RatingApplicationServiceTest {
@@ -24,6 +25,9 @@ public class RatingApplicationServiceTest {
 
     @Mock
     private CountryRepository countryRepository;
+
+    @Mock
+    private Country mockCountry;
 
     @Before
     public void setUp() {
@@ -49,5 +53,28 @@ public class RatingApplicationServiceTest {
 
         verify(userRepository).add(user);
         verify(countryRepository).add(country);
+    }
+
+    @Test
+    public void processNewUser_existingCountry_RecordsInserted() {
+        Country existingCountry = new Country("Canada");
+
+        State newState = new State("Ontario");
+        City newCity = new City("Toronto");
+
+        User user = new User("John", 1.14);
+
+        newState.addRValue(user.getRValue());
+        newState.addCity(newCity);
+
+        newCity.addRValue(user.getRValue());
+
+        when(countryRepository.get(existingCountry.getName())).thenReturn(mockCountry);
+
+        fixture.processNewUser(user.getName(), user.getRValue(), existingCountry.getName(), newState.getName() , newCity.getName());
+
+        verify(userRepository).add(user);
+        verify(mockCountry).addRValue(user.getRValue());
+        verify(mockCountry).addState(newState);
     }
 }

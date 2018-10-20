@@ -20,7 +20,8 @@ public class State extends Region {
     public String toString() {
         return "State{" +
                    "name='" + name + '\'' +
-                   '}';
+                   ", cityMap=" + cityMap +
+                   "} " + super.toString();
     }
 
     @Override
