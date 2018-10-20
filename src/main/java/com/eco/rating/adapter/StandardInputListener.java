@@ -31,7 +31,7 @@ public class StandardInputListener {
             double rValue = Double.parseDouble(strings[2]);
             String userName = strings[0].substring(1);
 
-            ratingApplicationService.addUser(userName, rValue, countryName, stateName, cityName);
+            ratingApplicationService.processNewUser(userName, rValue, countryName, stateName, cityName);
 
             line = scanner.nextLine().trim();
         }

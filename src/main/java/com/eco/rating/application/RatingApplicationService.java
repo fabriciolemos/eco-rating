@@ -4,34 +4,49 @@ import com.eco.rating.model.*;
 
 public class RatingApplicationService {
 
-    private UserRepository userRepository = new UserRepository();
-    private CountryRepository countryRepository = new CountryRepository();
+    private UserRepository userRepository;
+    private CountryRepository countryRepository;
 
-    public void addUser(String userName, double rValue, String countryName, String stateName, String cityName) {
+    public RatingApplicationService(UserRepository userRepository, CountryRepository countryRepository) {
+        this.userRepository = userRepository;
+        this.countryRepository = countryRepository;
+    }
+
+    public void processNewUser(String userName, double rValue, String countryName, String stateName, String cityName) {
         userRepository.add(new User(userName, rValue));
 
-        Country country = countryRepository.get(countryName);
-        if (country == null) {
-            country = new Country(countryName);
-            countryRepository.add(country);
-        }
-        country.getRValues().add(rValue);
+        Country country = updateCountry(rValue, countryName);
+        State state = updateState(rValue, stateName, country);
+        updateCity(rValue, cityName, state);
+    }
 
+    private void updateCity(double rValue, String cityName, State state) {
+        City city = state.getCity(cityName);
+        if (city == null) {
+            city = new City(cityName);
+            state.addCity(city);
+        }
+        city.addRValue(rValue);
+    }
+
+    private State updateState(double rValue, String stateName, Country country) {
         State state = country.getState(stateName);
         if (state == null) {
             state = new State(stateName);
             country.addState(state);
         }
+        state.addRValue(rValue);
+        return state;
+    }
 
-        state.getRValues().add(rValue);
-
-        City city = state.getCity(cityName);
-        if (city == null) {
-            city = new City(cityName);
-            state.add(city);
+    private Country updateCountry(double rValue, String countryName) {
+        Country country = countryRepository.get(countryName);
+        if (country == null) {
+            country = new Country(countryName);
+            countryRepository.add(country);
         }
-
-        city.getRValues().add(rValue);
+        country.addRValue(rValue);
+        return country;
     }
 
     public int getRating(String userName, String countryName, String stateName, String cityName) {

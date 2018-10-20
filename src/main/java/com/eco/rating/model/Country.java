@@ -2,6 +2,7 @@ package com.eco.rating.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Country extends Region {
     private String name;
@@ -18,8 +19,27 @@ public class Country extends Region {
     @Override
     public String toString() {
         return "Country{" +
-                "name='" + name + '\'' +
-                '}';
+                   "name='" + name + '\'' +
+                   '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Country country = (Country) o;
+        return Objects.equals(name, country.name) &&
+                   Objects.equals(stateMap, country.stateMap) &&
+                   Objects.equals(rValues, country.rValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, stateMap, rValues);
     }
 
     public State getState(String name) {

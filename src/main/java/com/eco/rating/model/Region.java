@@ -5,11 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Region {
-    private List<Double> rValues = new ArrayList<>();
+    protected List<Double> rValues = new ArrayList<>();
     private boolean rValuesSorted;
 
-    public List<Double> getRValues() {
-        return rValues;
+    public void addRValue(double rValue) {
+        this.rValues.add(rValue);
+        this.rValuesSorted = false;
     }
 
     public int getUserRating(User user) {

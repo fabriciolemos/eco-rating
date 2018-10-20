@@ -1,5 +1,6 @@
 package com.eco.rating.model;
 
+import java.util.Objects;
 public class City extends Region {
     private String name;
 
@@ -12,9 +13,27 @@ public class City extends Region {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        City city = (City) o;
+        return Objects.equals(name, city.name) &&
+                   Objects.equals(rValues, city.rValues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, rValues);
+    }
+
+    @Override
     public String toString() {
         return "City{" +
-                "name='" + name + '\'' +
-                '}';
+                   "name='" + name + '\'' +
+                   '}';
     }
 }
