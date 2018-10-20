@@ -2,12 +2,18 @@ package com.eco.rating.adapter;
 
 import com.eco.rating.application.RatingApplicationService;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class StandardInputListener {
 
-    private final Scanner scanner = new Scanner(System.in);
-    private final RatingApplicationService ratingApplicationService = new RatingApplicationService();
+    private Scanner scanner ;
+    private RatingApplicationService ratingApplicationService;
+
+    public StandardInputListener(InputStream inputStream, RatingApplicationService ratingApplicationService) {
+        this.scanner = new Scanner(inputStream);
+        this.ratingApplicationService = ratingApplicationService;
+    }
 
     public void processDataInput() {
         String line = scanner.nextLine().trim();

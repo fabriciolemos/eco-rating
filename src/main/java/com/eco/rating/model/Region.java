@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Region {
-    protected List<Double> rValues = new ArrayList<>();
+    private List<Double> rValues = new ArrayList<>();
     private boolean rValuesSorted;
 
     public List<Double> getRValues() {
