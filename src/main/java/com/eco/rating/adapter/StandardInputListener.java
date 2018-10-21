@@ -5,16 +5,20 @@ import com.eco.rating.application.RatingApplicationService;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class StandardInputListener {
+
+    private static final Pattern QUOTES_PATTERN = Pattern.compile("^\"|\"$");
+    private static final Pattern ELEMENT_SEPARATOR_PATTERN = Pattern.compile("\" ");
 
     private final PrintStream output;
     private Scanner scanner ;
     private RatingApplicationService ratingApplicationService;
 
-    public StandardInputListener(InputStream inputStream, PrintStream out, RatingApplicationService ratingApplicationService) {
+    public StandardInputListener(InputStream inputStream, PrintStream outputStream, RatingApplicationService ratingApplicationService) {
         this.scanner = new Scanner(inputStream);
-        this.output = out;
+        this.output = outputStream;
         this.ratingApplicationService = ratingApplicationService;
     }
 
@@ -22,7 +26,7 @@ public class StandardInputListener {
         String line = scanner.nextLine().trim();
 
         while (!line.isEmpty()) {
-            String[] strings = line.split("\" ");
+            String[] strings = ELEMENT_SEPARATOR_PATTERN.split(line);
 
             String[] locationInputArray = strings[1].split("/");
             String countryName = this.trimQuotes(locationInputArray[0]);
@@ -41,7 +45,7 @@ public class StandardInputListener {
         String line = scanner.nextLine().trim();
 
         while (!line.isEmpty()) {
-            String[] strings = line.split("\" ");
+            String[] strings = ELEMENT_SEPARATOR_PATTERN.split(line);
             String userName = strings[0].substring(1);
             String regionString = strings[1];
             String[] regionArray = regionString.split("/");
@@ -57,7 +61,7 @@ public class StandardInputListener {
         }
     }
 
-    private String trimQuotes(String s) {
-        return s.replaceAll("^\"|\"$", "");
+    private String trimQuotes(CharSequence s) {
+        return QUOTES_PATTERN.matcher(s).replaceAll("");
     }
 }
