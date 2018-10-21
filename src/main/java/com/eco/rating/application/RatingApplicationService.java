@@ -54,13 +54,13 @@ public class RatingApplicationService {
         Country country = countryRepository.get(countryName);
 
         if (cityName != null) {
-            return country.getState(stateName).getCity(cityName).getUserRating(user);
+            return country.getState(stateName).getCity(cityName).getRValueRating(user.getRValue());
         }
 
         if (stateName != null) {
-            return country.getState(stateName).getUserRating(user);
+            return country.getState(stateName).getRValueRating(user.getRValue());
         }
-        return country.getUserRating(user);
+        return country.getRValueRating(user.getRValue());
 
     }
 }

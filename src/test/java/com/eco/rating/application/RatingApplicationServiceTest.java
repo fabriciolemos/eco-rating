@@ -77,4 +77,8 @@ public class RatingApplicationServiceTest {
         verify(mockCountry).addRValue(user.getRValue());
         verify(mockCountry).addState(newState);
     }
+
+    //TODO add tests for the scenarios:
+    // 1. existing country and state
+    // 2. existing country, state and city
 }
