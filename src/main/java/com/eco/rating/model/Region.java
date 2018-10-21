@@ -19,7 +19,6 @@ public abstract class Region {
         int index = getRValueIndex(rValue);
         double percentageOfEntriesWithLowerRValue = (index + 1.0) / rValues.size();
         return getPercentageRating(percentageOfEntriesWithLowerRValue);
-
     }
 
     private int getPercentageRating(double percentage) {
