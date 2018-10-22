@@ -4,7 +4,9 @@
 The code is structure in the packages `application`, `adapter` and `model`, following DDD [convention](https://github.com/VaughnVernon/IDDD_Samples)
 
 ## Running the application
-Run the main method on `com.eco.rating.Rating`.
+You have two easy ways to run the application:
+* Run `java -jar target/rating-1.0.0.jar`
+* Run the main method on `com.eco.rating.Rating`.
 
 ## Building the application
 You can use Maven to build the application with `mvn clean install`. As part of the build, the unit tests and the end to end tests are executed. Because it consumes more time, the load test is disabled by default and can be enabled by removing the `@Ignore` annotation from the test class.
