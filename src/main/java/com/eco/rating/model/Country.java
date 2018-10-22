@@ -16,6 +16,14 @@ public class Country extends Region {
         return name;
     }
 
+    public State getState(String name) {
+        return stateMap.get(name);
+    }
+
+    public void addState(State state) {
+        this.stateMap.put(state.getName(), state);
+    }
+
     @Override
     public String toString() {
         return "Country{" +
@@ -40,13 +48,5 @@ public class Country extends Region {
     @Override
     public int hashCode() {
         return Objects.hash(name, stateMap, rValues);
-    }
-
-    public State getState(String name) {
-        return stateMap.get(name);
-    }
-
-    public void addState(State state) {
-        this.stateMap.put(state.getName(), state);
     }
 }
