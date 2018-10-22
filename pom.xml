@@ -6,7 +6,8 @@
 
     <groupId>com.eco</groupId>
     <artifactId>rating</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+    <!-- TODO create manifest with main method -->
 
     <build>
         <plugins>
