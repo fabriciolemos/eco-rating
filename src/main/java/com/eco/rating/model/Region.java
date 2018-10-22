@@ -14,18 +14,17 @@ public abstract class Region {
     }
 
     public int getRValueRating(double rValue) {
-        sortRValues();
-
         int index = getRValueIndex(rValue);
-        double percentageOfEntriesWithLowerRValue = (index + 1.0) / rValues.size();
-        return getPercentageRating(percentageOfEntriesWithLowerRValue);
+        double percentageOfEntriesWithLowerOrEqualRValue = (index + 1.0) / rValues.size();
+        return getRating(percentageOfEntriesWithLowerOrEqualRValue);
     }
 
-    private int getPercentageRating(double percentage) {
+    private int getRating(double percentage) {
         return (int) Math.ceil(percentage * 10);
     }
 
     private int getRValueIndex(double rValue) {
+        sortRValues();
         int index = Collections.binarySearch(rValues, rValue);
         return advanceIndexToMaxWithSameValue(index);
     }

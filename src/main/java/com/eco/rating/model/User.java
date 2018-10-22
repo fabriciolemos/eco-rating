@@ -1,6 +1,7 @@
 package com.eco.rating.model;
 
 import java.util.Objects;
+
 public class User {
     private String name;
     private double rValue;

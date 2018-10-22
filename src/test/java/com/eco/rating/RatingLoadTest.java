@@ -4,6 +4,7 @@ import com.eco.rating.adapter.StandardInputListener;
 import com.eco.rating.application.RatingApplicationService;
 import com.eco.rating.model.CountryRepository;
 import com.eco.rating.model.UserRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -15,9 +16,12 @@ import java.util.function.Consumer;
 
 import static java.lang.String.format;
 
+// The load test is executed with the input of 1.000.000 users with one query for each user.
+// TODO fail the test if the time taken is longer the the accepted requirement
 public class RatingLoadTest {
 
     @Test
+    @Ignore // TODO: this is ignored by default. Create a build profile to run this test specifically
     public void loadTestRating() {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(getTestInput().getBytes());

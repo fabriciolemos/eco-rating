@@ -25,7 +25,7 @@ public class StandardInputListenerTest {
     private RatingApplicationService applicationService;
 
     @Test
-    public void dataInput_singleLine_callService() {
+    public void dataInput_singleLine_callServiceOnce() {
         String userName = "John";
         String countryName = "Canada";
         String stateName = "Ontario";
@@ -41,7 +41,7 @@ public class StandardInputListenerTest {
     }
 
     @Test
-    public void dataInput_multiLine_callService() {
+    public void dataInput_multiLine_callServiceTwice() {
         String userName1 = "John";
         String countryName1 = "Canada";
         String stateName1 = "Ontario";
@@ -67,7 +67,7 @@ public class StandardInputListenerTest {
     }
 
     @Test
-    public void dataInput_valuesWithSpace_callService() {
+    public void dataInput_valuesWithSpace_callServiceOnce() {
         String userName = "Tony Stark";
         String countryName = "United States of America";
         String stateName = "New York";

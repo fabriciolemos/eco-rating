@@ -16,7 +16,7 @@ public class RegionTest {
     }
 
     @Test
-    public void getRating_UniqueRValue_LowRank() {
+    public void getRating_UniqueRValue_LowRating() {
         this.addRValuesToFixture(1.5, 3.7, 2.11, 2.11, 1.43);
 
         assertEquals(4, fixture.getRValueRating(1.5));

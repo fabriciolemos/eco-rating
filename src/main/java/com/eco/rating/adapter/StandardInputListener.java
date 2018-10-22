@@ -27,14 +27,13 @@ public class StandardInputListener {
 
     public void processDataInput() {
         BiConsumer<String[], String> dataInputProcessor = (inputLineEntries, userName) -> {
-            double rValue = parseDouble(inputLineEntries[2]);
-
             String[] location = inputLineEntries[1].split("/");
 
             String countryName = this.trimQuotes(location[0]);
             String stateName = this.trimQuotes(location[1]);
             String cityName = this.trimQuotes(location[2]);
 
+            double rValue = parseDouble(inputLineEntries[2]);
             ratingApplicationService.processNewUser(userName, rValue, countryName, stateName, cityName);
         };
 
@@ -44,12 +43,13 @@ public class StandardInputListener {
     public void processQueryInput() {
         BiConsumer<String[], String> queryInputProcessor = (inputLineEntries, userName) -> {
             String regionString = inputLineEntries[1];
+
             String[] regionArray = regionString.split("/");
             String countryName = trimQuotes(regionArray[0]);
             String stateName = getStateName(regionArray);
             String cityName = getCityName(regionArray);
 
-            int rating = StandardInputListener.this.ratingApplicationService.getRating(userName, countryName, stateName, cityName);
+            int rating = ratingApplicationService.getRating(userName, countryName, stateName, cityName);
 
             StringBuilder queryOutput = new StringBuilder("\"").append(userName).append("\" ").append(regionString).append(' ').append(rating);
             output.println(queryOutput);
