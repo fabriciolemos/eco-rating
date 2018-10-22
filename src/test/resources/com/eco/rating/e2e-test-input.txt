@@ -7,5 +7,9 @@
 
 "John Doe" "Canada"
 "John Doe" "Canada/Ontario"
+"John Doe" "Canada/Ontario/Toronto"
 "Alicia Yazzie" "US/Arizona"
+"Adam Xin" "Canada/British Columbia"
+"Adam Xin" "Canada/British Columbia/Vancouver"
+"Mohammed Zadeh" "Canada"
 
